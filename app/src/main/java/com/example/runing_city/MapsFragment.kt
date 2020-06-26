@@ -42,12 +42,6 @@ class MapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
         pointViewModel.listOfPoints.map() {
             googleMap.addMarker(MarkerOptions().position(LatLng(it.lat, it.lng)).title(it.title).snippet(it.description)).tag = it
         }
-//        val firstPoint = slideshowViewModel.getPoint(0)
-//        googleMap.addMarker(MarkerOptions().position(LatLng(firstPoint.lat, firstPoint.lng)).title(firstPoint.title))
-//        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-//            googleMap.addMarker(MarkerOptions().position(sydney).title(it))
-//        })
-//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.setInfoWindowAdapter(object : InfoWindowAdapter {
             override fun getInfoWindow(arg0: Marker): View? {
                 return null

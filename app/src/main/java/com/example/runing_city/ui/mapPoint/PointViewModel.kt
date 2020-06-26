@@ -11,7 +11,6 @@ class PointViewModel : ViewModel() {
         value = samplePoints
     }
     val listOfPoints:  List<MapPoint> = _listOfPoints.value!!
-//    var passedPoints: Int = 0
     private val _passedPoints = MutableLiveData<Int>()
     val passedPoints: LiveData<Int>
         get() = _passedPoints

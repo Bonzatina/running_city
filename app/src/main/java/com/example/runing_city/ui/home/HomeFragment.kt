@@ -21,8 +21,6 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-//        homeViewModel =
-//                ViewModelProviders.of(this).get(HomeViewModel::class.java)
         pointViewModel =
             ViewModelProviders.of(requireActivity()).get(PointViewModel::class.java)
         val binding = DataBindingUtil.inflate<FragmentHomeBinding>(

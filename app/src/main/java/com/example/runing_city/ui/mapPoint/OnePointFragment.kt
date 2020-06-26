@@ -44,9 +44,7 @@ class OnePointFragment : Fragment() {
         textDescriptionView.text = currentPoint.description
         textDetailsView.text = currentPoint.details
         textPassed.text = if (currentPoint.passed) "Yes!" else "No!"
-//        slideshowViewModel.getPoint(1).observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+
         root.submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER")
         { view: View ->
             if(textAnswer.text.toString().toLowerCase() == currentPoint.answer.toLowerCase() ){
