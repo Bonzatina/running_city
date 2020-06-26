@@ -1,7 +1,10 @@
 package com.example.runing_city
 
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Typeface
+import android.location.Location
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,11 +13,14 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.runing_city.ui.mapPoint.MapPoint
 import com.example.runing_city.ui.mapPoint.PointViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
@@ -27,7 +33,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
     private lateinit var pointViewModel: PointViewModel
-    private  val currentPoint: Int = 0
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var lastLocation: Location
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
     private val callback = OnMapReadyCallback { googleMap ->
         /**
          * Manipulates the map once available.
@@ -65,8 +75,10 @@ class MapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
                 return info
             }
         })
+        setUpMap(googleMap)
+        googleMap.getUiSettings().setZoomControlsEnabled(true)
         googleMap.setOnInfoWindowClickListener(this)
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(budapest, 14f))
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(budapest, 14f))
     }
 
     override fun onCreateView(
@@ -76,6 +88,7 @@ class MapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
     ): View? {
         pointViewModel =
             ViewModelProviders.of(requireActivity()).get(PointViewModel::class.java)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context as Activity)
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -86,9 +99,30 @@ class MapsFragment : Fragment(), GoogleMap.OnInfoWindowClickListener {
     }
 
     override fun onInfoWindowClick(p0: Marker?) {
-        val zz: MapPoint = p0?.tag as MapPoint
-        Toast.makeText(context, zz.pointId.toString(),
-            Toast.LENGTH_SHORT).show();
-        view?.findNavController()?.navigate(MapsFragmentDirections.actionNavMapToNavSlideshow( zz.pointId))
+        val mapPoint: MapPoint = p0?.tag as MapPoint
+        view?.findNavController()?.navigate(MapsFragmentDirections.actionNavMapToNavSlideshow( mapPoint.pointId))
+    }
+
+    private fun setUpMap(googleMap: GoogleMap) {
+        if (context?.let {
+                ActivityCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+            } != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                context as Activity,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+        googleMap.isMyLocationEnabled = true
+        fusedLocationClient.lastLocation.addOnSuccessListener(context as Activity) { location ->
+            // Got last known location. In some rare situations this can be null.
+            // 3
+            if (location != null) {
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 14f))
+            }
+        }
     }
 }
