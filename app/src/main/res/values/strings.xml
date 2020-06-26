@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Runing_City</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Running City</string>
+    <string name="nav_header_subtitle">city quest</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Main</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="submit">Submit</string>
+    <string name="menu_onepoint">One Point</string>
+    <string name="tools_details_text">Papp Laslo was once a downtown boy who used his fists only in backyard boxing championships. But after WWII Papp started as a trainee on the Optical Instruments Plant, where was an amateur boxing group. There strated his glorious path to the Olympics. Papp was an Olympic gold medalist three times, at middleweight in London in 1948, then as a light middleweight in Helsinki in 1952 and in Melbourne in 1956. Papp also was the European middleweight champion as a middleweight in 1949 at Oslo and at light middleweight at Milan 1951. He scored 55 first round knockouts as an amateur. His only dream was to win the World Championship as a professional boxer. But the dream stayed unaccomplished, the Communists didn\'t let him to fight as a professional for the Hungary on the championships.</string>
+    <string name="tools_task">Here goes question for this point</string>
+    <string name="is_point_passed">Point passed?</string>
+    <string name="type_your_answer">Type your answer</string>
+    <string name="passed_points">Passed points</string>
+    <string name="correct">Correct!</string>
+    <string name="wrong">Wrong!</string>
+    <string name="total_points">Total points</string>
+</resources>
